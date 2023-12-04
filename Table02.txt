@@ -1,0 +1,42 @@
+*&---------------------------------------------------------------------*
+*& Report Z_TABLE02
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT z_table02.
+
+START-OF-SELECTION.
+  "Internal Tabloya Insert İşlemi
+  DATA ls_database TYPE zbk_pers_t.
+
+  DATA : BEGIN OF gt_itab OCCURS 0,
+           pers_id    LIKE zbk_pers_t-pers_id,
+           pers_ad    LIKE zbk_pers_t-pers_ad,
+           pers_soyad LIKE zbk_pers_t-pers_soyad,
+           pers_cins  LIKE zbk_pers_t-pers_cins,
+         END OF gt_itab,
+         gs_01 LIKE gt_itab. " STRUCTURE oluşturduk(gs_01)
+
+  gs_01-pers_id = 5.
+  gs_01-pers_ad = 'MEHMET'.
+  gs_01-pers_soyad = 'YILMAZ'.
+  gs_01-pers_cins = 'E'.
+  INSERT gs_01 INTO TABLE gt_itab.
+
+  "start database insert<----
+  ls_database-pers_ad    = gs_01-pers_ad.
+  ls_database-pers_soyad = gs_01-pers_soyad.
+  ls_database-pers_cins  = gs_01-pers_cins.
+  ls_database-pers_id    = gs_01-pers_id.
+  INSERT zbk_pers_t FROM ls_database.
+  COMMIT WORK AND WAIT.
+  "end database insert>------
+
+  LOOP AT gt_itab.
+    WRITE: /
+    gt_itab-pers_id,
+    gt_itab-pers_ad,
+    gt_itab-pers_soyad,
+    gt_itab-pers_cins.
+
+  ENDLOOP.

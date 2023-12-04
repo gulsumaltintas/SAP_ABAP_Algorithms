@@ -1,0 +1,44 @@
+*&---------------------------------------------------------------------*
+*& Report Z_TABLE03
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT Z_TABLE03.
+
+START-OF-SELECTION.
+
+data: gv_persid type zbk_persi_de,
+      gv_persad type zbk_persad_de,
+      gv_perssoyad type zbk_perssoyad_de,
+      gv_perscins type zbk_perscins_de,
+      gs_pers_t type zbk_pers_t,
+      gt_pers_t type TABLE OF zbk_pers_t.
+
+"SELECT
+
+SELECT * FROM zbk_pers_t INTO TABLE gt_pers_t where pers_id eq 3.
+ LOOP AT gt_pers_t INTO gs_pers_t .
+   WRITE: / gs_pers_t-pers_id,
+   gs_pers_t-pers_ad,
+   gs_pers_t-pers_soyad,
+   gs_pers_t-pers_cins.
+
+   ENDLOOP.
+
+" INSERT
+gs_pers_t-pers_id = 8.
+gs_pers_t-pers_ad = 'HASAN'.
+gs_pers_t-pers_soyad = 'BULUT'.
+gs_pers_t-pers_cins = 'E'.
+INSERT zbk_pers_t from gs_pers_t.
+
+"DELETE
+
+DELETE FROM zbk_pers_t WHERE pers_id = 8.
+
+"MODIFY
+gs_pers_t-pers_id = 4.
+gs_pers_t-pers_ad = 'CAN'.
+gs_pers_t-pers_soyad = 'SÖNMEZ'.
+gs_pers_t-pers_cins = 'E'.
+MODIFY zbk_pers_t from gs_pers_t.

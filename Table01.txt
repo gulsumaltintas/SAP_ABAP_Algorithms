@@ -1,0 +1,52 @@
+*&---------------------------------------------------------------------*
+*& Report Z_TABLE01
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT Z_TABLE01.
+
+START-OF-SELECTION.
+
+DATA: BEGIN OF ogrenciler,
+           no TYPE i,
+           ad(20) TYPE c,
+           soyad(20) TYPE c,
+           tc(11) TYPE c,
+           END OF ogrenciler.
+
+ DATA: itab_ogr LIKE STANDARD TABLE OF ogrenciler WITH HEADER LINE.
+ " çalışma alanı gerektirmeyen internal tabloları işlemek için gerekli olan okuma değiştirme gibi çalışma alanı eylemlerini kullanabilmemizi sağlar.
+
+ itab_ogr-no = 100.
+ itab_ogr-ad = 'Ummügülsüm'.
+ itab_ogr-soyad = 'ALTINTAŞ'.
+ itab_ogr-tc = '12345678912'.
+ APPEND itab_ogr.
+
+ itab_ogr-no = 101.
+ itab_ogr-ad = 'Ayşenur'.
+ itab_ogr-soyad = 'ALTINTAŞ'.
+ itab_ogr-tc = '12345678913'.
+ APPEND itab_ogr.
+
+ itab_ogr-no = 102.
+ itab_ogr-ad = 'Ibrahim'.
+ itab_ogr-soyad = 'ALTINTAŞ'.
+ itab_ogr-tc = '12345678914'.
+ APPEND itab_ogr.
+
+ itab_ogr-no = 103.
+ itab_ogr-ad = 'Zehra'.
+ itab_ogr-soyad = 'ALTINTAŞ'.
+ itab_ogr-tc = '12345678915'.
+ APPEND itab_ogr.
+
+
+SORT itab_ogr BY ad ASCENDING.
+LOOP AT itab_ogr.
+
+   WRITE : / itab_ogr-no,
+     itab_ogr-ad,
+     itab_ogr-soyad,
+     itab_ogr-tc.
+   ENDLOOP.
